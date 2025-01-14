@@ -40,6 +40,8 @@ try:
                             'exp':result_list[3]
                         }
                         make_petition(query_data)
+                    else:
+                        print("CODIGO EXPIRADO")
                         
                 elif len(result_list) == 3:
                     if result_list[2] <= current_timestamp:
@@ -49,6 +51,8 @@ try:
                             'exp':result_list[2]
                         }
                         make_petition(query_data)
+                    else:
+                        print("CODIGO EXPIRADO")
                     pass
                 else:
                     print("BAD QR CODE")
