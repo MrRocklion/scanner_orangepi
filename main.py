@@ -33,7 +33,7 @@ try:
                 print({"qr debug >> "+data})
                 current_timestamp = int(time.time() * 1000)
                 if len(result_list) == 4:
-                    if result_list[3] <= current_timestamp:
+                    if int(result_list[3]) <= current_timestamp:
                         query_data = {
                             'user_id':result_list[0],
                             'tenant_id':result_list[1],
@@ -45,7 +45,7 @@ try:
                         print("CODIGO EXPIRADO")
                         
                 elif len(result_list) == 3:
-                    if result_list[2] <= current_timestamp:
+                    if int(result_list[2]) <= current_timestamp:
                         query_data = {
                             'user_id':result_list[0],
                             'tenant_id':result_list[1],
