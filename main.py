@@ -30,7 +30,7 @@ try:
             if ser.in_waiting: 
                 data = ser.readline().decode('utf-8', errors='ignore').strip()
                 result_list = data.split("|")
-                print({"qr debug >> "+result_list})
+                print({"qr debug >> "+data})
                 current_timestamp = int(time.time() * 1000)
                 if len(result_list) == 4:
                     if result_list[3] <= current_timestamp:
