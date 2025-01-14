@@ -3,10 +3,10 @@ import time
 import requests
 import json
 
-port = "COM8"
+port = "/dev/ttyACM0"
 baudrate = 9600 
 timeout = 1 
-url = "https://example.com/api/endpoint"
+url = "http://192.168.3.92:5000/api/qr_validator"
 headers = {
     'Content-Type': 'application/json'
 }
