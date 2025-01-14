@@ -11,18 +11,21 @@ headers = {
     'Content-Type': 'application/json'
 }
 def make_petition(_data):
-    response = requests.get(url, headers=headers, data=json.dumps(_data))
-    if response.status_code == 200:
-        response_data = response.json()
-        authorization = response_data.get("authorization", False)
-        if authorization:
-            print("INGRESA")
+    try:
+        response = requests.post(url, headers=headers, data=json.dumps(_data))
+        if response.status_code == 200:
+            response_data = response.json()
+            authorization = response_data.get("authorization", False)
+            if authorization:
+                print("INGRESA")
+            else:
+                print("USUARIO NO PERTENECE")
+            print("Authorization:", authorization)
         else:
-            print("USUARIO NO PERTENECE")
-        print("Autorizathion:", authorization)
-    else:
-        print("Error en la solicitud:", response.status_code)
-        print("Detalles:", response.text)  
+            print("Error en la solicitud:", response.status_code)
+            print("Detalles:", response.text)  
+    except requests.RequestException as e:
+        print("Error al realizar la petición:", e)
 try:
     with serial.Serial(port, baudrate, timeout=timeout) as ser:
         print(f"Escuchando en {port} a {baudrate} baudios. Presiona Ctrl+C para salir.")
