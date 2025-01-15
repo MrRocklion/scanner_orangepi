@@ -2,7 +2,7 @@ import serial
 import time
 import requests
 import json
-
+from gpiosManager import GpiosManager
 port = "/dev/ttyACM0"
 baudrate = 9600 
 timeout = 1 
@@ -10,6 +10,7 @@ url = "http://192.168.3.92:5000/api/qr_validator"
 headers = {
     'Content-Type': 'application/json'
 }
+turnstile = GpiosManager()
 def make_petition(_data):
     try:
         response = requests.post(url, headers=headers, data=json.dumps(_data))
@@ -18,6 +19,7 @@ def make_petition(_data):
             authorization = response_data.get("authorization", False)
             if authorization:
                 print("INGRESA")
+                turnstile.turnstileOpen()
             else:
                 print("USUARIO NO PERTENECE")
             print("Authorization:", authorization)
@@ -34,7 +36,8 @@ try:
                 data = ser.readline().decode('utf-8', errors='ignore').strip()
                 result_list = data.split("|")
                 print({"qr debug >> "+data})
-                current_timestamp = int(time.time() * 1000)
+                current_timestamp = int(time.time())
+                print("c_t >> "+str(current_timestamp))
                 if len(result_list) == 4:
                     if current_timestamp <= int(result_list[3]):
                         query_data = {
